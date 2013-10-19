@@ -8,6 +8,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
+import com.google.appengine.api.taskqueue.Queue;
+import com.google.appengine.api.taskqueue.QueueFactory;
+import com.google.appengine.api.taskqueue.TaskOptions;
 import com.google.appengine.api.xmpp.JID;
 import com.google.appengine.api.xmpp.Message;
 import com.google.appengine.api.xmpp.MessageBuilder;
@@ -54,6 +57,9 @@ public class XMPPResource {
         	.withBody("okay, consider it done...")
         	.build();
         xmpp.sendMessage(responseMessage);
+        
+        Queue queue = QueueFactory.getDefaultQueue();
+        queue.add(TaskOptions.Builder.withUrl("/_ah/task/example").param("name", fromJid.getId()));
         
 		//200 OK
 		return Response.ok().build();
