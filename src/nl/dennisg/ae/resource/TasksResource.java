@@ -6,11 +6,19 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 
+/**
+ * example JAX-RS REST endpoint for task queues
+ * 
+ * @author dennisg
+ *
+ */
 @Path("task")
 public class TasksResource {
 
 	@GET
 	public Response doGet() throws IOException {
-		return Response.ok("OK").build();
+		
+		//200 OK
+		return Response.ok().build();
 	}
 }

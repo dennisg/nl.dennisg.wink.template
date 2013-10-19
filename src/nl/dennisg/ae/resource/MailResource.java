@@ -14,11 +14,28 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
+/**
+ * JAX-RS REST endpoint for the incoming mail.
+ * 
+ * @author dennisg
+ *
+ */
 @Path("mail")
 public class MailResource {
 
 	
 	
+	/**
+	 * Receive an email. Using the request <code>InputStream</code>, 
+	 * you can construct a MimeMessage. Dissect it to parse the available
+	 * Multipart message parts.
+	 * 
+	 * @param email the target (receiving) email address.
+	 * @param req the <code>HttpServletRequest</code>
+	 * @return a proper <code>Response</code>
+	 * @throws IOException, usually when we fail to construct the MimeMessage from the request.
+	 * @throws MessagingException
+	 */
 	@POST
 	@Path("{email}")
 	public Response receiveMail(@PathParam("email") String email, @Context HttpServletRequest req) throws IOException, MessagingException {
@@ -33,6 +50,8 @@ public class MailResource {
         MimeMultipart mp = (MimeMultipart)message.getContent();
         System.out.println(mp.getBodyPart(0).getContent());
         
+        
+        //200 OK
 		return Response.ok().build();
 	}
 }
